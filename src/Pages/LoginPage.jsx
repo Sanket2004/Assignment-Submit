@@ -44,19 +44,19 @@ function LoginPage() {
                 <Loader text={'Trying to Login'} />
             ) : (
                 <>
-                    <Toaster position='top-center' /><div className="mx-auto w-full px-4 py-16 sm:px-6 lg:px-8 min-h-screen bg-gray-950 flex flex-col items-center justify-center">
+                    <Toaster position='top-center' /><div className="mx-auto w-full px-4 py-16 sm:px-6 lg:px-8 min-h-screen bg-zinc-950 flex flex-col items-center justify-center">
                         <div className="mx-auto max-w-md text-center">
                             <motion.h1
                                 whileInView={{ opacity: 1, y: 0 }}
                                 initial={{ opacity: 0, y: 20 }}
                                 transition={{ delay: 0, duration: 0.5 }}
-                                className="text-2xl font-black sm:text-3xl text-red-500">Welcome Back Buddy!</motion.h1>
+                                className="text-2xl font-black sm:text-3xl text-teal-500">Welcome Back Buddy!</motion.h1>
 
                             <motion.p
                                 whileInView={{ opacity: 1, y: 0 }}
                                 initial={{ opacity: 0, y: 20 }}
                                 transition={{ delay: 0.2, duration: 0.5 }}
-                                className="mt-4 text-gray-200">
+                                className="mt-4 text-zinc-200">
                                 Login to your account to continue helping others and get benifited by others.
                             </motion.p>
                         </div>
@@ -70,7 +70,7 @@ function LoginPage() {
                             >
                                 <label className="sr-only">Email</label>
                                 <input
-                                    className="bg-gray-900 text-white placeholder:text-gray-300 w-full rounded-lg border-2 border-gray-700 p-4 pe-12 text-sm shadow-sm"
+                                    className="bg-zinc-900 text-white placeholder:text-zinc-300 w-full rounded-lg border-2 border-zinc-700 p-4 pe-12 text-sm shadow-sm"
                                     type="email"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
@@ -84,7 +84,7 @@ function LoginPage() {
                             >
                                 <label className="sr-only">Password</label>
                                 <input
-                                    className="bg-gray-900 text-white placeholder:text-gray-300 w-full rounded-lg border-2 border-gray-700 p-4 pe-12 text-sm shadow-sm"
+                                    className="bg-zinc-900 text-white placeholder:text-zinc-300 w-full rounded-lg border-2 border-zinc-700 p-4 pe-12 text-sm shadow-sm"
                                     placeholder="Password"
                                     type="password"
                                     value={password}
@@ -98,7 +98,7 @@ function LoginPage() {
                                     initial={{ opacity: 0, y: 20 }}
                                     transition={{ delay: 0.8, duration: 0.5 }}
                                     type="submit"
-                                    className="w-full inline-block rounded-lg bg-red-500 px-8 py-3 text-sm font-medium text-white"
+                                    className="w-full inline-block rounded-lg bg-teal-500 px-8 py-3 text-sm font-medium text-white"
                                 >
                                     Sign In
                                 </motion.button>
@@ -106,7 +106,7 @@ function LoginPage() {
                                     whileInView={{ opacity: 1, y: 0 }}
                                     initial={{ opacity: 0, y: 20 }}
                                     transition={{ delay: 1, duration: 0.5 }}
-                                    className="text-sm text-gray-500">
+                                    className="text-sm text-zinc-500">
                                     Don't have an account ?
                                     <Link className="hover:underline" to={'/signup'}> Sign Up</Link>
                                 </motion.p>

@@ -68,20 +68,20 @@ function AddAssignmentPage() {
             {loading ? (
                 <Loader text={"Adding Assignment !"} />
             ) : (
-                <div className="mx-auto px-4 py-16 sm:px-6 lg:px-8 min-h-screen bg-gray-950 text-white flex flex-col items-center justify-center">
+                <div className="mx-auto px-4 py-16 sm:px-6 lg:px-8 min-h-screen bg-zinc-950 text-white flex flex-col items-center justify-center">
                     <div className="mx-auto w-full max-w-screen-lg text-center">
-                        <i className="ri-arrow-left-s-line bg-red-500 h-10 w-10 flex items-center justify-center flex-0 cursor-pointer rounded mb-4" onClick={() => navigate(-1)}></i>
+                        <i className="ri-arrow-left-s-line bg-teal-500 h-10 w-10 flex items-center justify-center flex-0 cursor-pointer rounded mb-4" onClick={() => navigate(-1)}></i>
                         <div className="mx-auto max-w-lg text-center">
                             <motion.h1
                                 whileInView={{ opacity: 1, y: 0 }}
                                 initial={{ opacity: 0, y: 20 }}
                                 transition={{ delay: 0, duration: 0.5 }}
-                                className="text-2xl font-black sm:text-3xl">Add Assignment</motion.h1>
+                                className="text-2xl font-black sm:text-3xl text-teal-500">Add Assignment</motion.h1>
                             <motion.p
                                 whileInView={{ opacity: 1, y: 0 }}
                                 initial={{ opacity: 0, y: 20 }}
                                 transition={{ delay: 0.2, duration: 0.5 }}
-                                className="mt-4 text-gray-400">
+                                className="mt-4 text-zinc-400">
                                 Add current assignment which is currently given in the class.
                             </motion.p>
                         </div>
@@ -93,13 +93,13 @@ function AddAssignmentPage() {
                             initial={{ opacity: 0, y: 20 }}
                             transition={{ delay: 0.4, duration: 0.5 }}
                             className="flex items-center justify-center">
-                            <label htmlFor="file-input" className="text-sm flex flex-row items-center bg-gray-900 hover:bg-gray-800 text-white py-4 px-4 rounded-lg cursor-pointer w-full border-2 border-gray-700">
+                            <label htmlFor="file-input" className="text-sm flex flex-row items-center bg-zinc-900 hover:bg-zinc-800 text-white py-4 px-4 rounded-lg cursor-pointer w-full border-2 border-zinc-700">
                                 <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4"></path>
                                 </svg>
                                 {selectedFile ?
                                     <span>{selectedFile.name}</span> :
-                                    <span>Attach Assignment <span className='text-red-400'>*</span></span>
+                                    <span>Attach Assignment <span className='text-teal-400'>*</span></span>
                                 }
                                 <input
                                     id="file-input"
@@ -120,7 +120,7 @@ function AddAssignmentPage() {
                         >
                             <label className="sr-only">Assignment Title</label>
                             <input
-                                className="bg-gray-900 text-white placeholder:text-gray-300 w-full rounded-lg border-2 border-gray-700 p-4 pe-12 text-sm shadow-sm"
+                                className="bg-zinc-900 text-white placeholder:text-zinc-300 w-full rounded-lg border-2 border-zinc-700 p-4 pe-12 text-sm shadow-sm"
                                 type="text"
                                 value={assignmentTitle}
                                 onChange={(e) => setAssignmentTitle(e.target.value)}
@@ -136,7 +136,7 @@ function AddAssignmentPage() {
                         >
                             <label className="sr-only">Subject</label>
                             <input
-                                className="bg-gray-900 text-white placeholder:text-gray-300 w-full rounded-lg border-2 border-gray-700 p-4 pe-12 text-sm shadow-sm"
+                                className="bg-zinc-900 text-white placeholder:text-zinc-300 w-full rounded-lg border-2 border-zinc-700 p-4 pe-12 text-sm shadow-sm"
                                 type="text"
                                 value={subject}
                                 onChange={(e) => setSubject(e.target.value)}
@@ -153,7 +153,7 @@ function AddAssignmentPage() {
                         >
                             <label className="sr-only">Assignment Details</label>
                             <textarea
-                                className="resize-none bg-gray-900 text-white placeholder:text-gray-300 w-full rounded-lg border-2 border-gray-700 p-4 pe-12 text-sm shadow-sm h-40"
+                                className="resize-none bg-zinc-900 text-white placeholder:text-zinc-300 w-full rounded-lg border-2 border-zinc-700 p-4 pe-12 text-sm shadow-sm h-40"
                                 type="text"
                                 value={assignmentDetails}
                                 onChange={(e) => setAssignmentDetails(e.target.value)}
@@ -171,7 +171,7 @@ function AddAssignmentPage() {
                             className="flex items-center justify-end">
                             <button
                                 type="submit"
-                                className="w-full inline-block rounded-lg bg-red-500 px-5 py-3 text-sm font-medium text-white"
+                                className="w-full inline-block rounded-lg bg-teal-500 px-5 py-3 text-sm font-medium text-white"
                             >
                                 Submit
                             </button>

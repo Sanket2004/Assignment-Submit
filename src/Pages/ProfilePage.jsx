@@ -187,18 +187,18 @@ function ProfilePage() {
             {loading ? ( // Render loading state
                 <Loader text={"Loading Profile"} />
             ) : (
-                <div className='w-full min-h-screen bg-gray-950 text-white'>
-                    {/* <i className="ri-arrow-left-s-line bg-red-500 h-10 w-10 flex items-center justify-center flex-0 cursor-pointer rounded mb-8" onClick={() => navigate(-1)}></i> */}
+                <div className='w-full min-h-screen bg-zinc-950 text-white'>
+                    {/* <i className="ri-arrow-left-s-line bg-teal-500 h-10 w-10 flex items-center justify-center flex-0 cursor-pointer rounded mb-8" onClick={() => navigate(-1)}></i> */}
                     <div className="mx-auto max-w-[90%] min-h-screen py-36 relative grid sm:grid-cols-2 gap-8">
 
 
                         {/* navbar */}
-                        <nav className='fixed top-8 left-1/2 transform -translate-x-1/2 w-full flex flex-row items-center justify-between bg-gray-900 max-w-[90%] px-2 py-2 rounded border-2 border-gray-700 z-50 drop-shadow-2xl'>
+                        <nav className='fixed top-8 left-1/2 transform -translate-x-1/2 w-full flex flex-row items-center justify-between bg-zinc-900 max-w-[90%] px-2 py-2 rounded border-2 border-zinc-700 z-50 drop-shadow-2xl'>
                             <div className="left">
                                 <img src={userDetails.profilePicUrl} className='object-cover h-12 w-12 rounded cursor-pointer' onClick={() => navigate(`/`)} />
                             </div>
                             <div className="right flex gap-2">
-                                <button onClick={handleLogout} className='bg-red-500 rounded px-4 h-12 text-sm'>Logout</button>
+                                <button onClick={handleLogout} className='bg-teal-500 rounded px-4 h-12 text-sm'>Logout</button>
                             </div>
                         </nav>
 
@@ -235,7 +235,7 @@ function ProfilePage() {
                                                 </button>
                                             </div>
                                         ) :
-                                            <label htmlFor="file-input" className="w-24 h-24 rounded text-sm flex flex-row items-center justify-center bg-gray-900 hover:bg-gray-800 text-white cursor-pointer border-2 border-gray-700">
+                                            <label htmlFor="file-input" className="w-24 h-24 rounded text-sm flex flex-row items-center justify-center bg-zinc-900 hover:bg-zinc-800 text-white cursor-pointer border-2 border-zinc-700">
                                                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4"></path>
                                                 </svg>
@@ -251,7 +251,7 @@ function ProfilePage() {
                                         }
                                     </>
                                 ) : (
-                                    <img src={userDetails.profilePicUrl} className='object-cover h-24 w-24 rounded bg-slate-800 border-2 border-gray-700' />
+                                    <img src={userDetails.profilePicUrl} className='object-cover h-24 w-24 rounded bg-slate-800 border-2 border-zinc-700' />
                                 )}
                             </motion.div>
 
@@ -260,14 +260,14 @@ function ProfilePage() {
                                 initial={{ opacity: 0, x: -20 }}
                                 transition={{ delay: 0.6, duration: 0.5 }}
                                 className="mt-4">
-                                <label htmlFor="name" className="block text-sm font-medium text-gray-400">Name</label>
+                                <label htmlFor="name" className="block text-sm font-medium text-zinc-400">Name</label>
                                 <input
                                     type="text"
                                     id="name"
                                     value={name || "Anonymous"}
                                     onChange={(e) => setName(e.target.value)}
                                     readOnly={!isEditing} // Set readOnly based on isEditing state
-                                    className="mt-1 p-3 block w-full border rounded bg-gray-800 border-gray-600 text-gray-100"
+                                    className="mt-1 p-3 block w-full border rounded bg-zinc-800 border-zinc-600 text-zinc-100"
                                 />
                             </motion.div>
 
@@ -276,14 +276,14 @@ function ProfilePage() {
                                 initial={{ opacity: 0, x: -20 }}
                                 transition={{ delay: 0.8, duration: 0.5 }}
                                 className="mt-4">
-                                <label htmlFor="dept" className="block text-sm font-medium text-gray-400">Department</label>
+                                <label htmlFor="dept" className="block text-sm font-medium text-zinc-400">Department</label>
                                 <input
                                     type="text"
                                     id="dept"
                                     value={dept || "Unknown"}
                                     onChange={(e) => setDept(e.target.value)}
                                     readOnly={!isEditing} // Set readOnly based on isEditing state
-                                    className="mt-1 p-3 block w-full border rounded bg-gray-800 border-gray-600 text-gray-100"
+                                    className="mt-1 p-3 block w-full border rounded bg-zinc-800 border-zinc-600 text-zinc-100"
                                 />
                             </motion.div>
 
@@ -292,14 +292,14 @@ function ProfilePage() {
                                 initial={{ opacity: 0, x: -20 }}
                                 transition={{ delay: 1, duration: 0.5 }}
                                 className="mt-4">
-                                <label htmlFor="phone" className="block text-sm font-medium text-gray-400">Phone</label>
+                                <label htmlFor="phone" className="block text-sm font-medium text-zinc-400">Phone</label>
                                 <input
                                     type="tel"
                                     id="phone"
                                     value={phone || 0}
                                     onChange={(e) => setPhone(e.target.value)}
                                     readOnly={!isEditing} // Set readOnly based on isEditing state
-                                    className="mt-1 p-3 block w-full border rounded bg-gray-800 border-gray-600 text-gray-100"
+                                    className="mt-1 p-3 block w-full border rounded bg-zinc-800 border-zinc-600 text-zinc-100"
                                 />
                             </motion.div>
 
@@ -309,7 +309,7 @@ function ProfilePage() {
                                     initial={{ opacity: 0, x: -20 }}
                                     transition={{ delay: 0.2, duration: 0.5 }}
                                     className="mt-4">
-                                    <button onClick={handleUpdateProfile} className="bg-red-500 px-4 py-2 rounded text-sm text-white">Save</button>
+                                    <button onClick={handleUpdateProfile} className="bg-teal-500 px-4 py-2 rounded text-sm text-white">Save</button>
                                 </motion.div>
                             ) : (
                                 ''
@@ -341,12 +341,12 @@ function ProfilePage() {
                                                 whileInView={{ opacity: 1, x: 0 }}
                                                 initial={{ opacity: 0, x: 20 }}
                                                 transition={{ delay: 0.2, duration: 0.5 }}
-                                                key={assignment.id} className=' bg-gradient-to-tl from-red-900 from-0% to-gray-800 to-50% h-max rounded w-full relative truncate border-b-8 border-red-500'>
+                                                key={assignment.id} className=' bg-gradient-to-tl from-teal-900 from-0% to-zinc-800 to-50% h-max rounded w-full relative truncate border-b-8 border-teal-500'>
                                                 <div className="py-4 px-4 cursor-pointer" onClick={() => navigate(`/assignment/${assignment.id}`)}>
                                                     {userDetails.profilePicUrl && (
                                                         <img src={userDetails.profilePicUrl} alt="Profile" className=" w-16 h-16 rounded-full hover:scale-110 transition duration-300" />
                                                     )}
-                                                    <h3 className='font-black text-xl text-red-500 truncate'>{assignment.title}</h3>
+                                                    <h3 className='font-black text-xl text-teal-500 truncate'>{assignment.title}</h3>
                                                     <p className='truncate font-semibold'>{assignment.details}</p>
                                                 </div>
                                                 <div className=" w-full flex justify-between items-center px-4 py-4">
@@ -355,7 +355,7 @@ function ProfilePage() {
                                                         <p className='text-xs'>{new Date(assignment.createdAt.seconds * 1000).toLocaleString()}</p>
                                                     </div>
                                                     {assignment.createdBy === auth.currentUser.uid ?
-                                                        <button onClick={() => handleDeleteAssignment(assignment.id)} className='text-sm '><i className="ri-delete-bin-line text-red-400"></i></button>
+                                                        <button onClick={() => handleDeleteAssignment(assignment.id)} className='text-sm '><i className="ri-delete-bin-line text-teal-400"></i></button>
                                                         : ''}
                                                 </div>
                                             </motion.div>

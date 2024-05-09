@@ -10,7 +10,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['"Noto Sans SC", sans-serif', ...defaultTheme.fontFamily.sans],
+        sans: ['"Inter", sans-serif', ...defaultTheme.fontFamily.sans],
       },
     },
   },

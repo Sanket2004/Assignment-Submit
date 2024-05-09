@@ -107,21 +107,21 @@ function HomePage() {
       {data.loading ? (
         <Loader text={"Loading"} />
       ) : (
-        <div className='w-full min-h-screen bg-gray-950 text-white'>
+        <div className='w-full min-h-screen bg-zinc-950 text-white'>
           {data.userData &&
             <div className="mx-auto max-w-[90%] min-h-screen py-36 relative">
               {/* navbar */}
-              < nav className='fixed top-8 left-1/2 transform -translate-x-1/2 w-full flex flex-row items-center justify-between bg-gray-900 max-w-[90%] px-2 py-2 rounded border-2 border-gray-700 z-50 drop-shadow-2xl'>
+              < nav className='fixed top-8 left-1/2 transform -translate-x-1/2 w-full flex flex-row items-center justify-between bg-zinc-900 max-w-[90%] px-2 py-2 rounded border-2 border-zinc-700 z-50 drop-shadow-2xl'>
                 <div className="left">
                   <img src={data.userData.profilePicUrl} className='h-12 w-12 rounded cursor-pointer' onClick={() => navigate('/profile')} />
                 </div>
                 <div className="right flex gap-2">
-                  <button onClick={handleLogout} className='bg-red-500 rounded px-4 h-12 text-sm hover:bg-red-600 transition duration-300'>Logout</button>
+                  <button onClick={handleLogout} className='bg-teal-500 rounded px-4 h-12 text-sm hover:bg-teal-600 transition duration-300'>Logout</button>
                 </div>
               </nav>
 
               {/* Add assignment button */}
-              <button onClick={() => navigate('/addAssignment')} className='bg-red-500 rounded px-4 py-3 fixed bottom-8 right-6 sm:right-20 text-sm z-50 hover:bg-red-600 transition duration-300'><i className="ri-add-line"></i> Add Assignment</button>
+              <button onClick={() => navigate('/addAssignment')} className='bg-teal-500 rounded px-4 py-3 fixed bottom-8 right-6 sm:right-20 text-sm z-50 hover:bg-teal-600 transition duration-300'><i className="ri-add-line"></i> Add Assignment</button>
 
               {/* cards */}
               {data.assignments.length == 0 ?
@@ -136,7 +136,7 @@ function HomePage() {
                       initial={{ opacity: 0, y: 20 }}
                       transition={{ delay: 0, duration: 0.5 }}
                       // whileHover={{scale: 1.02}}
-                      key={assignment.id} className=' bg-gradient-to-tl from-red-900 from-0% to-gray-800 to-50% h-72 rounded w-full relative truncate border-b-8 border-red-500'>
+                      key={assignment.id} className=' bg-gradient-to-tl from-teal-900 from-0% to-zinc-800 to-50% h-72 rounded w-full relative truncate border-b-8 border-teal-500'>
                       <div className="relative h-[40%] w-full object-cover cursor-pointer" onClick={() => navigate(`/assignment/${assignment.id}`)}>
                         {/* Use the background image based on the current index */}
                         <img src={backgroundImages[backgroundImageIndex]} className='h-full w-full object-cover' />
@@ -145,7 +145,7 @@ function HomePage() {
                         )}
                       </div>
                       <div className="py-8 px-4 cursor-pointer" onClick={() => navigate(`/assignment/${assignment.id}`)}>
-                        <h3 className='font-black text-2xl text-red-500 truncate'>{assignment.title}</h3>
+                        <h3 className='font-black text-2xl text-teal-500 truncate'>{assignment.title}</h3>
                         <p className='truncate font-semibold'>{assignment.details}</p>
                       </div>
                       <div className="absolute bottom-0 w-full flex justify-between items-center px-4 py-4">
@@ -154,7 +154,7 @@ function HomePage() {
                           <p className='text-xs'>{new Date(assignment.createdByDetails.createdAt.seconds * 1000).toLocaleString()}</p>
                         </div>
                         {assignment.createdBy === auth.currentUser.uid ?
-                          <button onClick={() => handleDeleteAssignment(assignment.id)} className='text-sm '><i className="ri-delete-bin-line text-red-400"></i></button>
+                          <button onClick={() => handleDeleteAssignment(assignment.id)} className='text-sm '><i className="ri-delete-bin-line text-teal-400"></i></button>
                           : ''}
                       </div>
                     </motion.div>

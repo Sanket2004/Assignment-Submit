@@ -268,9 +268,9 @@ function AssignmentDetailsPage() {
                 <Loader text={'Loading Assignment'} />)}
             {assignment && (
                 <>
-                    <button className='fixed h-10 w-max bg-red-500 bottom-8 right-8 text-white rounded px-4 shadow-xl text-sm' onClick={toggleModal}><i className="ri-add-line"></i> Add Answer</button><div className="mx-auto w-full min-h-screen px-4 py-20 sm:px-6 lg:px-8 bg-gray-950 text-white">
+                    <button className='fixed h-10 w-max bg-teal-500 bottom-8 right-8 text-white rounded px-4 shadow-xl text-sm' onClick={toggleModal}><i className="ri-add-line"></i> Add Answer</button><div className="mx-auto w-full min-h-screen px-4 py-20 sm:px-6 lg:px-8 bg-zinc-950 text-white">
                         <div className="mx-auto max-w-screen-xl">
-                            <i className="ri-arrow-left-s-line bg-red-500 h-10 w-10 flex items-center justify-center flex-0 cursor-pointer rounded mb-8" onClick={() => navigate(-1)}></i>
+                            <i className="ri-arrow-left-s-line bg-teal-500 h-10 w-10 flex items-center justify-center flex-0 cursor-pointer rounded mb-8" onClick={() => navigate(-1)}></i>
                             {/* <div className="flex flex-row items-center gap-4 mb-4">
                                 <h2 className='text-l sm:text-xl font-bold text-white'>
                                     Assignment Details
@@ -281,10 +281,10 @@ function AssignmentDetailsPage() {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 initial={{ opacity: 0, y: 20 }}
                                 transition={{ delay: 0, duration: 0.5 }}
-                                className="rounded border-b-4 border-red-500 overflow-hidden">
-                                {creator ? <div className="min-h-24 bg-gray-900 to-50% relative">
+                                className="rounded border-b-4 border-teal-500 overflow-hidden">
+                                {creator ? <div className="min-h-24 bg-zinc-900 to-50% relative">
                                     <div className="flex flex-col justify-center px-6 pt-6">
-                                        <h2 className='text-2xl sm:text-3xl font-black text-red-500 text-wrap whitespace-pre-wrap' style={{ lineBreak: "auto", wordWrap: "break-word" }}>{assignment.title}</h2>
+                                        <h2 className='text-2xl sm:text-3xl font-black text-teal-500 text-wrap whitespace-pre-wrap' style={{ lineBreak: "auto", wordWrap: "break-word" }}>{assignment.title}</h2>
                                         <p className='text-base max-h-60 overflow-auto mt-2 font-bold'>Subject - {assignment.subject || "Unknown"}</p>
                                         <div className="flex flex-row items-center justify-start gap-2 mt-4">
                                             <img src={creator.profilePicUrl} className='w-10 h-10 rounded-full' />
@@ -300,10 +300,10 @@ function AssignmentDetailsPage() {
                                     </div>
                                 }
 
-                                <div className="p-6 bg-gray-900 to-50%">
+                                <div className="p-6 bg-zinc-900 to-50%">
                                     <p className='font-bold'>Description</p>
                                     <p className='text-base max-h-60 overflow-auto text-wrap break-words whitespace-break-spaces mt-2'>{assignment.details}</p>
-                                    <a className=' mt-4 bg-gray-900 px-3 py-2 rounded border-2 border-gray-700 flex w-max gap-2 items-center justify-center h-10' href={assignment.fileURL} target="_blank" rel="noopener noreferrer">
+                                    <a className=' mt-4 bg-zinc-900 px-3 py-2 rounded border-2 border-zinc-700 flex w-max gap-2 items-center justify-center h-10' href={assignment.fileURL} target="_blank" rel="noopener noreferrer">
                                         <i className="ri-file-text-line"></i>
                                         <p className='text-sm'> {assignment.title}</p>
                                     </a>
@@ -314,12 +314,12 @@ function AssignmentDetailsPage() {
 
                             {isModalOpen && (
                                 <div className="fixed top-0 left-0 w-full h-screen flex items-center justify-center bg-black bg-opacity-50 z-50 backdrop-blur-md">
-                                    <div className="bg-gray-900 rounded-lg p-8 w-[90%] sm:w-[40rem] h-4/3">
+                                    <div className="bg-zinc-900 rounded-lg p-8 w-[90%] sm:w-[40rem] h-4/3">
                                         <motion.h3
                                             whileInView={{ opacity: 1, y: 0 }}
                                             initial={{ opacity: 0, y: 20 }}
                                             transition={{ delay: 0, duration: 0.5 }}
-                                            className="text-xl font-black mb-4 text-red-500">Add Assignment Answer</motion.h3>
+                                            className="text-xl font-black mb-4 text-teal-500">Add Answer</motion.h3>
                                         <form onSubmit={handleSubmitAnswer} className='flex flex-col gap-4'>
                                             <motion.div
                                                 whileInView={{ opacity: 1, y: 0 }}
@@ -327,7 +327,7 @@ function AssignmentDetailsPage() {
                                                 transition={{ delay: 0.2, duration: 0.5 }}
                                                 className="flex flex-col items-start justify-center">
                                                 <p className='text-sm mb-2'>Choose a file</p>
-                                                <label htmlFor="file-input" className="text-sm flex flex-row items-center bg-gray-900 hover:bg-gray-800 text-white py-4 px-4 rounded cursor-pointer w-full border-2 border-gray-700">
+                                                <label htmlFor="file-input" className="text-sm flex flex-row items-center bg-zinc-900 hover:bg-zinc-800 text-white py-4 px-4 rounded cursor-pointer w-full border-2 border-zinc-700">
                                                     <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4"></path>
                                                     </svg>
@@ -347,16 +347,16 @@ function AssignmentDetailsPage() {
                                                 initial={{ opacity: 0, y: 20 }}
                                                 transition={{ delay: 0.4, duration: 0.5 }}
                                                 className="flex flex-col items-start justify-center">
-                                                <p className='text-sm mb-2'>Add your answer or comment <span className='text-red-400'>*</span></p>
-                                                <textarea className='rounded bg-gray-900 p-4 w-full h-36 resize-none border-2 border-gray-700 mb-4 text-sm' value={answer} onChange={(e) => setAnswer(e.target.value)} placeholder="Enter your answer" required />
+                                                <p className='text-sm mb-2'>Add your answer or comment <span className='text-teal-400'>*</span></p>
+                                                <textarea className='rounded bg-zinc-900 p-4 w-full h-36 resize-none border-2 border-zinc-700 mb-4 text-sm' value={answer} onChange={(e) => setAnswer(e.target.value)} placeholder="Enter your answer" required />
                                             </motion.div>
                                             <motion.div
                                                 whileInView={{ opacity: 1, y: 0 }}
                                                 initial={{ opacity: 0, y: 20 }}
                                                 transition={{ delay: 0.6, duration: 0.5 }}
                                                 className="flex justify-end">
-                                                <button type="button" className="inline-block rounded bg-gray-700 text-white px-4 py-2 mr-4 text-sm hover:bg-red-600 transition duration-300" onClick={toggleModal}>Cancel</button>
-                                                <button type="submit" className="inline-block rounded bg-red-500 text-white px-4 py-2 text-sm hover:bg-red-600 transition duration-300">Submit Answer</button>
+                                                <button type="button" className="inline-block rounded bg-zinc-700 text-white px-4 py-2 mr-4 text-sm hover:bg-red-600 transition duration-300" onClick={toggleModal}>Cancel</button>
+                                                <button type="submit" className="inline-block rounded bg-teal-500 text-white px-4 py-2 text-sm hover:bg-teal-600 transition duration-300">Submit Answer</button>
                                             </motion.div>
                                         </form>
                                     </div>
@@ -371,7 +371,7 @@ function AssignmentDetailsPage() {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 initial={{ opacity: 0, y: 20 }}
                                 transition={{ delay: 0.2, duration: 0.5 }}
-                                className='text-l sm:text-xl text-gray-400 font-bold mb-4'>Discussion</motion.h3>
+                                className='text-l sm:text-xl text-zinc-400 font-bold mb-4'>Discussion</motion.h3>
                             {answers.length === 0 ? (
                                 <motion.p
                                     whileInView={{ opacity: 1, y: 0 }}
@@ -385,7 +385,7 @@ function AssignmentDetailsPage() {
                                             whileInView={{ opacity: 1, y: 0 }}
                                             initial={{ opacity: 0, y: 20 }}
                                             transition={{ delay: 0.5, duration: 0.5 }}
-                                            key={answer.id} className='bg-gradient-to-br from-red-900 from-0% to-gray-900 to-50% rounded mb-2 p-4 border-2 border-gray-700'>
+                                            key={answer.id} className='bg-gradient-to-br from-teal-900 from-0% to-zinc-900 to-50% rounded mb-2 p-4 border-2 border-zinc-700'>
                                             <div className='flex flex-row gap-2 items-center my-2'>
                                                 {answer.user.profilePicUrl && (
                                                     <img src={answer.user.profilePicUrl} alt="" className='h-10 w-10 rounded-full' />
@@ -396,14 +396,14 @@ function AssignmentDetailsPage() {
                                                 </div>
                                             </div>
                                             <p className='py-2 rounded text-wrap break-words whitespace-break-spaces'>{answer.answer}</p>
-                                            {answer.fileDownloadURL != null ? <a className='text-red-500 font-semibold' href={answer.fileDownloadURL}>Attached File</a> : ''}
+                                            {answer.fileDownloadURL != null ? <a className='text-teal-500 font-semibold' href={answer.fileDownloadURL}>Attached File</a> : ''}
                                             {answer.user && (
                                                 <div className="flex flex-row justify-between items-center mt-2">
                                                     <div className='flex flex-row items-center justify-center gap-4'>
                                                         {/* Button to upvote an answer */}
                                                         <button onClick={() => handleVote(answer.id)} disabled={votedAnswers[answer.id]}>
                                                             {votedAnswers[answer.id] ? (
-                                                                <i className="ri-thumb-up-fill text-red-500"></i>
+                                                                <i className="ri-thumb-up-fill text-teal-500"></i>
                                                             ) : (
                                                                 <i className="ri-thumb-up-line"></i>
                                                             )}
@@ -412,7 +412,7 @@ function AssignmentDetailsPage() {
                                                         <span className='text-sm'>{answer.votes || 0}</span>
                                                     </div>
 
-                                                    {auth.currentUser.uid === answer.userId ? <button onClick={() => handleDeleteAnswer(answer.id, answer.fileDownloadURL)}><i className="ri-delete-bin-line text-red-400"></i></button> : ""}
+                                                    {auth.currentUser.uid === answer.userId ? <button onClick={() => handleDeleteAnswer(answer.id, answer.fileDownloadURL)}><i className="ri-delete-bin-line text-teal-400"></i></button> : ""}
                                                 </div>
                                             )}
                                         </motion.li>

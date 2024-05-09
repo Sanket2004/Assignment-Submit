@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { auth, db } from '../firebase';
+import { auth, db, storage } from '../firebase';
 import toast, { Toaster } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { doc, getDoc, collection, getDocs, deleteDoc } from 'firebase/firestore';
 import Loader from '../Components/Loader';
 import { motion } from 'framer-motion';
+import { deleteObject, ref } from 'firebase/storage';
 
 
 function HomePage() {
@@ -65,6 +66,9 @@ function HomePage() {
   }, []);
 
   const handleLogout = async () => {
+    if (!window.confirm('Are you sure you want to logout?')) {
+      return;
+    }
     try {
       await auth.signOut();
       toast.success('Logout successfully!')
@@ -75,20 +79,38 @@ function HomePage() {
     }
   };
 
-  const handleDeleteAssignment = async (id) => {
-    try {
-      await deleteDoc(doc(db, 'assignments', id));
-      // Remove the deleted assignment from state
-      setData(prevData => ({
-        ...prevData,
-        assignments: prevData.assignments.filter(assignment => assignment.id !== id)
-      }));
-      toast.success('Assignment deleted successfully!');
-    } catch (error) {
-      console.error('Error deleting assignment:', error.message);
-      toast.error('Error deleting assignment!');
-    }
-  };
+const handleDeleteAssignment = async (id) => {
+  // Ask the user for confirmation before deleting the assignment
+  if (!window.confirm('Are you sure you want to delete this assignment?')) {
+    return;
+  }
+
+  try {
+    // Fetch the assignment from Firestore
+    const assignmentDoc = await getDoc(doc(db, 'assignments', id));
+    const assignmentData = assignmentDoc.data();
+
+    // Delete the file from Firebase Storage
+    const fileRef = ref(storage, assignmentData.fileURL);
+    await deleteObject(fileRef);
+
+    // Delete the assignment from Firestore
+    await deleteDoc(doc(db, 'assignments', id));
+
+    // Remove the deleted assignment from state
+    setData(prevData => ({
+      ...prevData,
+      assignments: prevData.assignments.filter(assignment => assignment.id !== id)
+    }));
+
+    toast.success('Assignment and associated file deleted successfully!');
+  } catch (error) {
+    console.error('Error deleting assignment and associated file:', error.message);
+    toast.error('Error deleting assignment and associated file!');
+  }
+};
+
+  
 
   let backgroundImageIndex = 0;
 
@@ -113,7 +135,7 @@ function HomePage() {
               {/* navbar */}
               < nav className='fixed top-8 left-1/2 transform -translate-x-1/2 w-full flex flex-row items-center justify-between bg-zinc-900 max-w-[90%] px-2 py-2 rounded border-2 border-zinc-700 z-50 drop-shadow-2xl'>
                 <div className="left">
-                  <img src={data.userData.profilePicUrl} className='h-12 w-12 rounded cursor-pointer' onClick={() => navigate('/profile')} />
+                  <img src={data.userData.profilePicUrl} className='object-cover h-12 w-12 rounded cursor-pointer' onClick={() => navigate('/profile')} />
                 </div>
                 <div className="right flex gap-2">
                   <button onClick={handleLogout} className='bg-teal-500 rounded px-4 h-12 text-sm hover:bg-teal-600 transition duration-300'>Logout</button>
@@ -139,9 +161,9 @@ function HomePage() {
                       key={assignment.id} className=' bg-gradient-to-tl from-teal-900 from-0% to-zinc-800 to-50% h-72 rounded w-full relative truncate border-b-8 border-teal-500'>
                       <div className="relative h-[40%] w-full object-cover cursor-pointer" onClick={() => navigate(`/assignment/${assignment.id}`)}>
                         {/* Use the background image based on the current index */}
-                        <img src={backgroundImages[backgroundImageIndex]} className='h-full w-full object-cover' />
+                        <img src={backgroundImages[backgroundImageIndex]} className='object-cover h-full w-full object-cover' />
                         {assignment.createdByDetails.profilePicUrl && (
-                          <img src={assignment.createdByDetails.profilePicUrl} alt="Profile" className="absolute w-16 h-16 -bottom-7 right-4 rounded-full hover:scale-110 transition duration-300" />
+                          <img src={assignment.createdByDetails.profilePicUrl} alt="Profile" className="object-cover absolute w-16 h-16 -bottom-7 right-4 rounded-full hover:scale-110 transition duration-300" />
                         )}
                       </div>
                       <div className="py-8 px-4 cursor-pointer" onClick={() => navigate(`/assignment/${assignment.id}`)}>

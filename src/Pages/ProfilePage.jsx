@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { auth, db, storage } from '../firebase';
 import { collection, deleteDoc, doc, getDoc, getDocs, query, updateDoc, where } from 'firebase/firestore';
 import toast, { Toaster } from 'react-hot-toast';
-import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
+import { deleteObject, getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import Loader from '../Components/Loader';
 import { motion } from 'framer-motion';
 
@@ -166,19 +166,31 @@ function ProfilePage() {
     };
 
     const handleDeleteAssignment = async (id) => {
+        // Ask the user for confirmation before deleting the assignment
+        if (!window.confirm('Are you sure you want to delete this assignment?')) {
+            return;
+        }
+
         try {
+            // Delete the file from Firebase Storage
+            const assignmentDoc = await getDoc(doc(db, 'assignments', id));
+            const assignmentData = assignmentDoc.data();
+            const fileRef = ref(storage, assignmentData.fileURL);
+            await deleteObject(fileRef);
+
+            // Delete the assignment from Firestore
             await deleteDoc(doc(db, 'assignments', id));
-            // Remove the deleted assignment from state
-            setData(prevData => ({
-                ...prevData,
-                assignments: prevData.assignments.filter(assignment => assignment.id !== id)
-            }));
-            toast.success('Assignment deleted successfully!');
+
+            // Update the assignments state by filtering out the deleted assignment
+            setAssignments(prevAssignments => prevAssignments.filter(assignment => assignment.id !== id));
+
+            toast.success('Assignment and associated file deleted successfully!');
         } catch (error) {
-            console.error('Error deleting assignment:', error.message);
-            toast.error('Error deleting assignment!');
+            console.error('Error deleting assignment and associated file:', error.message);
+            toast.error('Error deleting assignment and associated file!');
         }
     };
+
 
 
     return (
@@ -229,7 +241,7 @@ function ProfilePage() {
                                     <>
                                         {profilePicPreview ? (
                                             <div className='relative w-24 h-24 rounded overflow-hidden'>
-                                                <img src={profilePicPreview} alt="Profile Preview" className='h-24 w-24 rounded object-cover' />
+                                                <img src={profilePicPreview} alt="Profile Preview" className='object-cover h-24 w-24 rounded object-cover' />
                                                 <button onClick={() => setProfilePicPreview(null)} className='bg-[#45454594] w-full h-8 absolute bottom-0 left-1/2 transform -translate-x-1/2  text-white'>
                                                     <i className="ri-delete-bin-line"></i>
                                                 </button>
@@ -322,18 +334,25 @@ function ProfilePage() {
                             <div>
                                 <div className="flex justify-between items-center mb-4">
                                     <motion.h1
-                                    whileInView={{ opacity: 1, x: 0 }}
-                                    initial={{ opacity: 0, x: 20 }}
-                                    transition={{ delay: 0, duration: 0.5 }}
-                                    className='font-black text-xl'>My Assignments</motion.h1>
+                                        whileInView={{ opacity: 1, x: 0 }}
+                                        initial={{ opacity: 0, x: 20 }}
+                                        transition={{ delay: 0, duration: 0.5 }}
+                                        className='font-black text-xl'>My Assignments</motion.h1>
+                                    <motion.div
+                                        whileInView={{ opacity: 1, x: 0 }}
+                                        initial={{ opacity: 0, x: 20 }}
+                                        transition={{ delay: 0.2, duration: 0.5 }}
+                                        className="">
+                                        <button onClick={()=>navigate('/addAssignment')} className="text-white rounded text-sm text-white"><i className="ri-add-line text-xl"></i></button>
+                                    </motion.div>
                                 </div>
                                 {/* cards */}
                                 {assignments.length == 0 ?
                                     <motion.p
-                                    whileInView={{ opacity: 1, x: 0 }}
-                                    initial={{ opacity: 0, x: 20 }}
-                                    transition={{ delay: 0, duration: 0.5 }}
-                                    className=''>You haven't created any assignment.</motion.p>
+                                        whileInView={{ opacity: 1, x: 0 }}
+                                        initial={{ opacity: 0, x: 20 }}
+                                        transition={{ delay: 0, duration: 0.5 }}
+                                        className=''>You haven't created any assignment.</motion.p>
                                     :
                                     <div className='grid sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-8'>
                                         {assignments.map(assignment => (
@@ -344,7 +363,7 @@ function ProfilePage() {
                                                 key={assignment.id} className=' bg-gradient-to-tl from-teal-900 from-0% to-zinc-800 to-50% h-max rounded w-full relative truncate border-b-8 border-teal-500'>
                                                 <div className="py-4 px-4 cursor-pointer" onClick={() => navigate(`/assignment/${assignment.id}`)}>
                                                     {userDetails.profilePicUrl && (
-                                                        <img src={userDetails.profilePicUrl} alt="Profile" className=" w-16 h-16 rounded-full hover:scale-110 transition duration-300" />
+                                                        <img src={userDetails.profilePicUrl} alt="Profile" className="object-cover w-16 h-16 rounded-full hover:scale-110 transition duration-300" />
                                                     )}
                                                     <h3 className='font-black text-xl text-teal-500 truncate'>{assignment.title}</h3>
                                                     <p className='truncate font-semibold'>{assignment.details}</p>

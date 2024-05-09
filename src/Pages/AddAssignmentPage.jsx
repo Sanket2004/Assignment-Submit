@@ -105,7 +105,7 @@ function AddAssignmentPage() {
                                     id="file-input"
                                     className="hidden"
                                     type="file"
-                                    accept=".pdf,.doc,.docx"
+                                    accept=".pdf,.doc,.docx,.txt,.png,.jpeg,.jpg"
                                     onChange={handleFileChange}
                                     required
                                 />

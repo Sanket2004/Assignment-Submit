@@ -18,8 +18,6 @@ function AssignmentDetailsPage() {
     const [assignmentTitle, setAssignmentTitle] = useState('');
     const [assignmentDetails, setAssignmentDetails] = useState('');
     const [loading, setLoading] = useState(true); // State to manage loading status
-
-
     const navigate = useNavigate();
 
     const handleFileChange = (e) => {
@@ -178,6 +176,9 @@ function AssignmentDetailsPage() {
 
 
     const handleDeleteAnswer = async (answerId, fileDownloadURL) => {
+        if (!window.confirm('Are you sure you want to delete this answer?')) {
+            return;
+        }
         setLoading(true);
         try {
             // Delete the answer document from Firestore
@@ -216,10 +217,7 @@ function AssignmentDetailsPage() {
     const handleVote = async (answerId) => {
         try {
             // Check if the user has already voted for this answer
-            const votedRef = collection(db, `assignments/${id}/answers/${answerId}/voted`);
-            const votedSnapshot = await getDocs(votedRef);
-            const votedUsers = votedSnapshot.docs.map(doc => doc.id);
-            if (votedUsers.includes(auth.currentUser.uid)) {
+            if (votedAnswers[answerId]) {
                 toast.error("You've already voted for this answer.");
                 return;
             }
@@ -227,15 +225,29 @@ function AssignmentDetailsPage() {
             // Update the vote count for the answer in Firestore
             const answerRef = doc(db, `assignments/${id}/answers`, answerId);
             await runTransaction(db, async (transaction) => {
+
+
+                // Check if the user has already voted for this answer
+                const votedRef = collection(db, `assignments/${id}/answers/${answerId}/voted`);
+                const votedSnapshot = await getDocs(votedRef);
+                const votedUsers = votedSnapshot.docs.map(doc => doc.id);
+
+
+                if (votedUsers.includes(auth.currentUser.uid)) {
+                    toast.error("You've already voted for this answer.");
+                    return;
+                }
                 const answerDoc = await transaction.get(answerRef);
                 if (!answerDoc.exists()) {
                     throw new Error("Answer document does not exist");
                 }
                 const newVotes = (answerDoc.data().votes || 0) + 1;
                 transaction.update(answerRef, { votes: newVotes });
+
                 // Store user's vote in Firestore
                 await setDoc(doc(db, `assignments/${id}/answers/${answerId}/voted`, auth.currentUser.uid), { voted: true });
-                toast.success('You have sucessfully voted.')
+
+                toast.success('You have successfully voted.');
             });
 
             // Update the votedAnswers state to indicate that the user has voted for this answer
@@ -253,6 +265,22 @@ function AssignmentDetailsPage() {
         }
     };
 
+
+    useEffect(() => {
+        // Check if the current user has already voted for each answer
+        const checkIfVoted = async () => {
+            const promises = answers.map(async answer => {
+                const votedRef = collection(db, `assignments/${id}/answers/${answer.id}/voted`);
+                const votedSnapshot = await getDocs(votedRef);
+                const votedUsers = votedSnapshot.docs.map(doc => doc.id);
+                return { [answer.id]: votedUsers.includes(auth.currentUser.uid) };
+            });
+            const results = await Promise.all(promises);
+            const votedAnswersMap = Object.assign({}, ...results);
+            setVotedAnswers(votedAnswersMap);
+        };
+        checkIfVoted();
+    }, [answers]);
 
 
 
@@ -287,7 +315,7 @@ function AssignmentDetailsPage() {
                                         <h2 className='text-2xl sm:text-3xl font-black text-teal-500 text-wrap whitespace-pre-wrap' style={{ lineBreak: "auto", wordWrap: "break-word" }}>{assignment.title}</h2>
                                         <p className='text-base max-h-60 overflow-auto mt-2 font-bold'>Subject - {assignment.subject || "Unknown"}</p>
                                         <div className="flex flex-row items-center justify-start gap-2 mt-4">
-                                            <img src={creator.profilePicUrl} className='w-10 h-10 rounded-full' />
+                                            <img src={creator.profilePicUrl} className='object-cover w-10 h-10 rounded-full' />
                                             <div className="flex flex-col items-start justify-center">
                                                 <p className='font-semibold'>{creator.name || "Anonymous"}</p>
                                                 <p className='text-sm'><i className="ri-calendar-line"></i> {new Date(assignment.createdAt.seconds * 1000).toLocaleString()}</p>
@@ -388,7 +416,7 @@ function AssignmentDetailsPage() {
                                             key={answer.id} className='bg-gradient-to-br from-teal-900 from-0% to-zinc-900 to-50% rounded mb-2 p-4 border-2 border-zinc-700'>
                                             <div className='flex flex-row gap-2 items-center my-2'>
                                                 {answer.user.profilePicUrl && (
-                                                    <img src={answer.user.profilePicUrl} alt="" className='h-10 w-10 rounded-full' />
+                                                    <img src={answer.user.profilePicUrl} alt="" className='object-cover h-10 w-10 rounded-full' />
                                                 )}
                                                 <div className="flex flex-col">
                                                     <p className='font-bold text-md'>{answer.user.displayName || "Unknown"}</p>
@@ -401,15 +429,18 @@ function AssignmentDetailsPage() {
                                                 <div className="flex flex-row justify-between items-center mt-2">
                                                     <div className='flex flex-row items-center justify-center gap-4'>
                                                         {/* Button to upvote an answer */}
-                                                        <button onClick={() => handleVote(answer.id)} disabled={votedAnswers[answer.id]}>
-                                                            {votedAnswers[answer.id] ? (
-                                                                <i className="ri-thumb-up-fill text-teal-500"></i>
-                                                            ) : (
-                                                                <i className="ri-thumb-up-line"></i>
-                                                            )}
-                                                        </button>
-                                                        {/* Display the vote count */}
-                                                        <span className='text-sm'>{answer.votes || 0}</span>
+                                                        {/* Vote button */}
+                                                        <div className='flex flex-row items-center justify-center gap-4'>
+                                                            <button onClick={() => handleVote(answer.id)} disabled={votedAnswers[answer.id]} className={votedAnswers[answer.id] ? "cursor-not-allowed" : "cursor-pointer"}>
+                                                                {votedAnswers[answer.id] ? (
+                                                                    <i className="ri-thumb-up-fill text-teal-500"></i>
+                                                                ) : (
+                                                                    <i className="ri-thumb-up-line"></i>
+                                                                )}
+                                                            </button>
+                                                            {/* Display the vote count */}
+                                                            <span className='text-sm'>{answer.votes || 0}</span>
+                                                        </div>
                                                     </div>
 
                                                     {auth.currentUser.uid === answer.userId ? <button onClick={() => handleDeleteAnswer(answer.id, answer.fileDownloadURL)}><i className="ri-delete-bin-line text-teal-400"></i></button> : ""}

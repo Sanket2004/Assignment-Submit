@@ -6,6 +6,7 @@ import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import toast, { Toaster } from 'react-hot-toast';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import Loader from '../Components/Loader';
 
 const SignUp = () => {
   const [name, setName] = useState('');

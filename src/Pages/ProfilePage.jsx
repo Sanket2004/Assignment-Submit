@@ -195,7 +195,7 @@ function ProfilePage() {
                         {/* navbar */}
                         <nav className='fixed top-8 left-1/2 transform -translate-x-1/2 w-full flex flex-row items-center justify-between bg-gray-900 max-w-[90%] px-2 py-2 rounded border-2 border-gray-700 z-50 drop-shadow-2xl'>
                             <div className="left">
-                                <img src={userDetails.profilePicUrl} className='object-cover h-12 w-12 rounded cursor-pointer' onClick={() => navigate(`/user/${auth.currentUser.uid}`)} />
+                                <img src={userDetails.profilePicUrl} className='object-cover h-12 w-12 rounded cursor-pointer' onClick={() => navigate(`/`)} />
                             </div>
                             <div className="right flex gap-2">
                                 <button onClick={handleLogout} className='bg-red-500 rounded px-4 h-12 text-sm'>Logout</button>
